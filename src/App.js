@@ -15,7 +15,7 @@ function App() {
       
       e.target.className = "icon click fa-solid fa-lock" 
     }else e.target.className = "icon click fa-solid fa-lock-open" 
-    //e.target.className = "icon click fa-solid fa-lock" 
+    
   }
   document.addEventListener("keydown", (event) => {
     console.log("effect", event);
@@ -35,8 +35,15 @@ function App() {
   }
   function setRandomColors() {
     const cols = document.querySelectorAll(".col");
+    
     cols.forEach((col) => {
       //let color = generateRandomColor()
+      const isLocked = col.querySelector("i").classList.contains("fa-lock")
+      console.log(`isLocked`, isLocked);
+      if(isLocked) return
+      for(let i = 0; i < col.length; i++){
+        console.log(`col[i]`, col[i]);
+      }
       let color = chroma.random();
       col.style.background = color;
       let text = col.querySelector("h2");
