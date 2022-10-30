@@ -2,19 +2,17 @@ import { useState, useEffect } from "react";
 import chroma from "chroma-js";
 import "./App.scss";
 import copyToClipboard from "./functions/copyToClipboard"
+import lockIt from "./functions/lockIt"
 function App() {
   const [initial, setInitial] = useState(true);
   useEffect(() => {
-      setRandomColors();
+    console.log("from hash", getColorsFromHash());
+      setRandomColors(initial);
+      //setInitial(false)
       return () => {};
-  });
+  },[]);
   
-  function lockIt(e) {
-    console.log("icon click", e.target.className);
-    if (e.target.className.includes("fa-lock-open")) {
-      e.target.className = "icon click fa-solid fa-lock";
-    } else e.target.className = "icon click fa-solid fa-lock-open";
-  }
+
   document.addEventListener("keydown", (event) => {
     console.log("effect", event);
     if (event.code === "Space") {
@@ -22,7 +20,6 @@ function App() {
       setRandomColors();
     }
   });
-
   // function generateRandomColor() {
   //   const hexCodes = "0123456789ABCDEF";
   //   let color = "";
@@ -31,7 +28,7 @@ function App() {
   //   }
   //   return "#" + color;
   // }
-  function setRandomColors(initial,) {
+  function setRandomColors(initial) {
     const cols = document.querySelectorAll(".col");
   console.log(`isInitial`, initial);
     const colors = initial ?  getColorsFromHash() : [] ;
@@ -67,7 +64,6 @@ function App() {
 
       updateColorsHash(colors);
 
-    
   }
 
   function setTextColor(text, color) {
@@ -92,7 +88,7 @@ function App() {
     }
     return [];
   }
-  console.log("from hash", getColorsFromHash());
+  
   return (
     <div
       className="colors"
