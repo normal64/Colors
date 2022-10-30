@@ -35,16 +35,21 @@ function App() {
   }
   function setRandomColors() {
     const cols = document.querySelectorAll(".col");
-    
+    const colors = [];
     cols.forEach((col) => {
       //let color = generateRandomColor()
       const isLocked = col.querySelector("i").classList.contains("fa-lock")
       console.log(`isLocked`, isLocked);
-      if(isLocked) return
+      if(isLocked){
+        console.log("locked", col.querySelector("h2").textContent)
+        colors.push(col.querySelector("h2").textContent)
+        return
+      } 
       for(let i = 0; i < col.length; i++){
         console.log(`col[i]`, col[i]);
       }
       let color = chroma.random();
+      colors.push(color)
       col.style.background = color;
       let text = col.querySelector("h2");
       let button = col.querySelector("button");
@@ -52,44 +57,56 @@ function App() {
       setTextColor(text, color);
       setTextColor(button, color);
     });
+    console.log(`colors`, colors);
+    updateColorsHash(colors)
   }
   function setTextColor(text, color) {
     const luminance = chroma(color).luminance();
     text.style.color = luminance > 0.5 ? "black" : "white";
   }
-
+function copyToClipboard(text){
+  return navigator.clipboard.writeText(text)
+}
+function updateColorsHash(colors=[]){
+  document.location.hash = colors.map(elem =>{
+     return elem.toString().slice(1)
+  }).join("-")
+}
+function getColorsFromHash(){
+  
+}
   return (
     <div
       className="colors"
       //onKeyPress={(event) =>handleSpacePress(event)}
     >
       <div className="col">
-        <h2>Text</h2>
+        <h2 onClick={e=>copyToClipboard(e.target.innerHTML)}>Text</h2>
 
         <button data-type="lock">
           <i className="fa-solid fa-lock-open" onClick={(e) => lockIt(e)}></i>
         </button>
       </div>
       <div className="col">
-        <h2>Text</h2>
+        <h2 onClick={e=>copyToClipboard(e.target.innerHTML)}>Text</h2>
         <button>
           <i className="fa-solid fa-lock-open"  onClick={(e) => lockIt(e)}></i>
         </button>
       </div>
       <div className="col">
-        <h2>Text</h2>
+        <h2 onClick={e=>copyToClipboard(e.target.innerHTML)}>Text</h2>
         <button>
           <i className="fa-solid fa-lock-open"  onClick={(e) => lockIt(e)}></i>
         </button>
       </div>
       <div className="col">
-        <h2>Text</h2>
+        <h2 onClick={e=>copyToClipboard(e.target.innerHTML)}>Text</h2>
         <button>
           <i className="fa-solid fa-lock-open"  onClick={(e) => lockIt(e)}></i>
         </button>
       </div>
       <div className="col">
-        <h2>Text</h2>
+        <h2 onClick={e=>copyToClipboard(e.target.innerHTML)}>Text</h2>
         <button>
           <i className="fa-solid fa-lock-open"  onClick={(e) => lockIt(e)}></i>
         </button>
